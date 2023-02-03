@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -20,4 +23,5 @@ public class GroupEntity {
     private int size;
     private int minAge;
     private int maxAge;
+    private Set<String> studentsList = new HashSet<>();
 }

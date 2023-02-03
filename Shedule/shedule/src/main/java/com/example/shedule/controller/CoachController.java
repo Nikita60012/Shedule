@@ -46,7 +46,7 @@ public class CoachController {
     }
 
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     public ResponseEntity deleteCoach(@PathVariable Long id){
         try {
             return ResponseEntity.ok(coachService.deleteCoach(id));

@@ -12,12 +12,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class StudentEntity {
+public class LessonsCalendarEntity {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
-    private String fullName;
-    private String phoneNumber;
-    private String birthDate;
-    private Long groupId;
+    private String groupName;
+    private String date;
+    private String time;
 }
