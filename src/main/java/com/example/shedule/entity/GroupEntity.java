@@ -20,6 +20,6 @@ public class GroupEntity {
     private int size;
     private int minAge;
     private int maxAge;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
     private Set<StudentEntity> studentsList = new HashSet<>();
 }

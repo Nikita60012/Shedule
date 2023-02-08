@@ -3,6 +3,7 @@ package com.example.shedule.service;
 import com.example.shedule.entity.GroupEntity;
 import com.example.shedule.entity.StudentEntity;
 import com.example.shedule.exceptions.ObjectNotFoundException;
+import com.example.shedule.model.Group;
 import com.example.shedule.model.Student;
 import com.example.shedule.repository.GroupRepo;
 import com.example.shedule.repository.StudentRepo;
@@ -34,8 +35,8 @@ public class GroupService {
         StudentEntity student = studentRepo.findById(studentId).get();
         GroupEntity group = groupRepo.findById(groupId).get();
         group.getStudentsList().add(student);
-        groupRepo.save(group);
         student.setGroup(group);
+        studentRepo.save(student);
         return "Ученик добавлен в группу";
     }
     public String remove(Long groupId, Long studentId){
@@ -44,19 +45,29 @@ public class GroupService {
 
         return "Ученик исключён из группы";
     }
-    public GroupEntity readOne(Long id) throws ObjectNotFoundException {
+    public Group readOne(Long id) throws ObjectNotFoundException {
         GroupEntity group = groupRepo.findById(id).get();
         if(group == null){
             throw new ObjectNotFoundException("Записи с такой группой не существует");
         }
-        return group;
+        return Group.toModel(group);
     }
-    public List<GroupEntity> readAll() throws ObjectNotFoundException {
-        List<GroupEntity> groupList = new ArrayList<>();
-        groupList = groupRepo.findAll();
+    public List<Group> readAll() throws ObjectNotFoundException {
+        List<Group> groupList = new ArrayList<>();
+        for (GroupEntity group : groupRepo.findAll()){
+            groupList.add(Group.toModel(group));
+        }
         if(groupList == null){
             throw new ObjectNotFoundException("Ученики отсутствуют");
         }
         return groupList;
+    }
+    public Set<Student> readStudents(Long id){
+        Set<Student> students = new HashSet<>();
+        GroupEntity group = groupRepo.findById(id).get();
+        for(StudentEntity student : group.getStudentsList()) {
+            students.add(Student.toModel(student));
+        }
+        return students;
     }
 }

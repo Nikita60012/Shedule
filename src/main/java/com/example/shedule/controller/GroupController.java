@@ -41,6 +41,14 @@ public class GroupController {
             return  ResponseEntity.badRequest().body("Ошибка!");
         }
     }
+    @GetMapping("/{groupId}/students")
+    public ResponseEntity getStudentsList(@PathVariable Long groupId){
+        try {
+            return ResponseEntity.ok(groupService.readStudents(groupId));
+        } catch (Exception e){
+            return  ResponseEntity.badRequest().body("Ошибка!");
+        }
+    }
 
     @DeleteMapping
     public ResponseEntity delete(@RequestParam Long id){

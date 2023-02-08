@@ -14,7 +14,7 @@ public class Student {
     private String fullName;
     private String phoneNumber;
     private String birthDate;
-    //private Long groupId;
+    private Long groupId;
     //private List<String> skipped;
 
     public static Student toModel(StudentEntity entity){
@@ -23,7 +23,7 @@ public class Student {
         model.setFullName(entity.getFullName());
         model.setPhoneNumber(entity.getPhoneNumber());
         model.setBirthDate(entity.getBirthDate());
-       // model.setGroupId(entity.getGroup().getId());
+        model.setGroupId(entity.getGroup().getId());
         return model;
     }
 

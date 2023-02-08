@@ -21,7 +21,7 @@ public class StudentService {
         // if(coachRepo.findByCoachName(coach.getFullName()) != null){
         //     throw new CoachAlreadyExistException("Такой тренер уже существует");
         // }
-        student.setGroup(null);
+
         return studentRepo.save(student);
     }
     public String edit(Long id, StudentEntity student){

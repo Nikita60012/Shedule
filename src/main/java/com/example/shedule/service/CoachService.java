@@ -16,14 +16,16 @@ public class CoachService {
     @Autowired
     private CoachRepo coachRepo;
     public CoachEntity registration(CoachEntity coach) throws ObjectAlreadyExistException {
-        /*if(coachRepo.findByCoachName(coach.getFullName()) != null){
+        if(coachRepo.findByFullName(coach.getFullName()) != null){
             throw new ObjectAlreadyExistException("Такой тренер уже существует");
         }
 
-         */
         return coachRepo.save(coach);
     }
-    public String edit(Long id, CoachEntity coach){
+    public String edit(Long id, CoachEntity coach) throws ObjectNotFoundException {
+        if(!coachRepo.existsById(id)){
+            throw new ObjectNotFoundException("Такого тренера не существует");
+        }
         CoachEntity editingCoach = coachRepo.findById(id).get();
         if(coach.getFullName() != null){ editingCoach.setFullName(coach.getFullName());}
         if(coach.getPhoneNumber() != null){ editingCoach.setPhoneNumber(coach.getPhoneNumber());}
@@ -32,10 +34,10 @@ public class CoachService {
         return "Данные тренера изменены";
     }
     public Coach readOne(Long id) throws ObjectNotFoundException {
-        CoachEntity coach = coachRepo.findById(id).get();
-        if(coach == null){
-            throw new ObjectNotFoundException("Записи с таким тренером не существует");
+        if(!coachRepo.existsById(id)){
+            throw new ObjectNotFoundException("Такого тренера не существует");
         }
+        CoachEntity coach = coachRepo.findById(id).get();
         return Coach.toModel(coach);
     }
     public List<Coach> readAll() throws ObjectNotFoundException {
@@ -43,7 +45,8 @@ public class CoachService {
         for(CoachEntity coach : coachRepo.findAll()){
             coachList.add(Coach.toModel(coach));
         }
-        if(coachList == null){
+
+        if(coachList.isEmpty()){
             throw new ObjectNotFoundException("Тренеры отсутствуют");
         }
         return coachList;

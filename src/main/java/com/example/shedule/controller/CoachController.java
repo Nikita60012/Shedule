@@ -24,10 +24,12 @@ public class CoachController {
             return  ResponseEntity.badRequest().body("Ошибка!");
         }
     }
-    @PutMapping
-    public ResponseEntity editCoach(@RequestParam Long id, @RequestBody CoachEntity coach) {
+    @PostMapping("/{id}")
+    public ResponseEntity editCoach(@PathVariable Long id, @RequestBody CoachEntity coach) {
         try {
             return ResponseEntity.ok(coachService.edit(id, coach));
+        }catch(ObjectNotFoundException e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
         }catch (Exception e){
             return  ResponseEntity.badRequest().body("Ошибка!");
         }
@@ -48,6 +50,8 @@ public class CoachController {
     public ResponseEntity getAllCoach(){
         try {
             return  ResponseEntity.ok(coachService.readAll());
+        }catch (ObjectNotFoundException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }catch (Exception e){
             return  ResponseEntity.badRequest().body("Ошибка!");
         }

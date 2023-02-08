@@ -16,6 +16,6 @@ public class StudentEntity {
     private String fullName;
     private String phoneNumber;
     private String birthDate;
-    @ManyToOne
+    @ManyToOne@JoinColumn(name = "group_id")
     private GroupEntity group;
 }
